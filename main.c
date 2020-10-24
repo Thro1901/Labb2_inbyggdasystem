@@ -10,6 +10,7 @@
 
 void main (void) {
 	uart_init();
+	LED_init();
 
 	while (1) {
 		/* remove this once you've verified it works */
