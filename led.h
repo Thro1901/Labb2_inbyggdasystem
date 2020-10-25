@@ -3,12 +3,13 @@
 
 void LED_init(void);
 
-void blink_led();
+void TOGGLE_led();
 
 void LED_on();
 
 void LED_off();
 
+void BLINK_led();
 
 #endif // _LED_H_
 
