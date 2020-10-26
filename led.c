@@ -4,7 +4,7 @@
 
 void LED_init() {
 
-	DDRB |= (1 << PB0); //PORTB To output
+	DDRD |= (1 << PD6); //PORTD To output pwn pin 6
 }
 
 void TOGGLE_led() {

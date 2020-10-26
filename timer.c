@@ -3,15 +3,10 @@
 #include "timer.h"
 
 void timer_init() {
-    // Set the Timer Mode to CTC
-    TCCR0A |= (1 << WGM01);
+    // set fast PWM Mode, non-inverting
+    TCCR0A |= (1 << WGM01) | (1 << WGM00) | (1 << COM0A1);
 
-    // Set the value (155) that you want to count to
-    OCR0A = 0x9B;
-    // Counts up with each pulse. MAX 255
-    TCNT0 = 0; 
-
-    TCCR0B |= (1 << CS00) | (1 << CS02);
-    // set prescaler to 1024 and start the timer
+    TCCR0B |= (1 << CS00) | (1 << CS01);
+    // set prescaler to 64
 }
 

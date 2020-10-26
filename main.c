@@ -8,24 +8,25 @@
 #include "led.h"
 #include "serial.h"
 #include "timer.h"
-//volatile uint16_t count;
 
-int main (void) {
-    int count = 0;
-
+int main (void) {  
+    
 	uart_init();
 	LED_init();
     timer_init();
+    LED_on();
     
-    while (1) {
-
-        while ((TIFR0 & (1 << OCF0A)) > 0) {      // wait for the overflow event
-            count++; //increment by 1
-            if (count == 10) {
-                TOGGLE_led();
-                count = 0;
-            }
-            TIFR0 |= (1 << OCF0A);  // reset the overflow flag
+    while (1) { 
+        int Duty = 0;
+        for (Duty = 0; Duty <= 255; Duty++)   // 0 to max duty cycle
+        {
+            OCR0A = Duty;     //slowly increase the LED brightness
+            _delay_ms(10);
+        }
+        for (Duty = 255; Duty >= 0; Duty--)   // max to 0 duty cycle
+        {
+            OCR0A = Duty;     //slowly decrease the LED brightness
+            _delay_ms(10);
         }
     }
 }
