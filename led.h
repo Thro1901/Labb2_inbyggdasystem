@@ -11,5 +11,7 @@ void LED_off();
 
 void BLINK_led();
 
+uint8_t simple_ramp();
+
 #endif // _LED_H_
 

@@ -9,25 +9,19 @@
 #include "serial.h"
 #include "timer.h"
 
+
 int main (void) {  
-    
+
 	uart_init();
 	LED_init();
     timer_init();
-    LED_on();
-    
-    while (1) { 
-        int Duty = 0;
-        for (Duty = 0; Duty <= 255; Duty++)   // 0 to max duty cycle
-        {
-            OCR0A = Duty;     //slowly increase the LED brightness
-            _delay_ms(10);
-        }
-        for (Duty = 255; Duty >= 0; Duty--)   // max to 0 duty cycle
-        {
-            OCR0A = Duty;     //slowly decrease the LED brightness
-            _delay_ms(10);
-        }
+
+    while (1) {
+         while ((TIFR2 & (1 << OCF2A)) > 0) { //While TIFR2 register is more than 0. Wait for the overflow event
+
+            OCR0A = simple_ramp();
+            TIFR2 |= (1 << OCF2A); // This resets the flag
+         }   
     }
 }
 
